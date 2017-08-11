@@ -20,7 +20,7 @@ The output is in csv format, to handle future multiple coordinates to output at 
 
 ### Grib2
 ```bash
-python grib_reader.py ${FILE_PATH} latitude longitude
+python3 grib_reader.py ${FILE_PATH} latitude longitude
 ```
 
 - `${FILE_PATH}` path to file to read`
@@ -28,7 +28,7 @@ python grib_reader.py ${FILE_PATH} latitude longitude
 
 Example:
 ```bash
-python grib_reader.py -data '2 metre temperature' ${FILE_PATH} 50.136000 1.834000
+python3 grib_reader.py -data '2 metre temperature' ${FILE_PATH} 50.136000 1.834000
 ```
 
 ### With docker image
