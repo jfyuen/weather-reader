@@ -10,7 +10,7 @@ Tiff files were only tested with Meteo France export with a single value encoded
 
 ### Geotiff
 ```bash
-python3 tiff_reader.py ${FILE_PATH} latitude longitude
+python3 tiff_reader.py ${FILE_PATH} --pos=latitude,longitude
 ```
 
 - `${FILE_PATH}`: path to file to read`
@@ -18,17 +18,29 @@ python3 tiff_reader.py ${FILE_PATH} latitude longitude
 
 The output is in csv format, to handle future multiple coordinates to output at once.
 
+Alternatively, a `-csv` flag can be given instead of `--pos` to read a csv file containing `latitude` and `longitude` columns.
+Read values will be appended to the csv for each row.
+```bash
+python3 tiff_reader.py  --csv=${POSITIONS.csv} ${FILE_PATH}
+```
+
 ### Grib2
 ```bash
-python3 grib_reader.py ${FILE_PATH} latitude longitude
+python3 grib_reader.py --pos=latitude,longitude ${FILE_PATH}
 ```
 
 - `${FILE_PATH}` path to file to read`
-- Option `--data`: extract selected data from file, e.g: '2 metre temperature'
+- Option `-data`: extract selected data from file, e.g: '2 metre temperature'
 
 Example:
 ```bash
-python3 grib_reader.py -data '2 metre temperature' ${FILE_PATH} 50.136000 1.834000
+python3 grib_reader.py --data='2 metre temperature' --pos=50.136000,1.834000 ${FILE_PATH}
+```
+
+Alternatively, a `--csv` flag can be given instead of `--pos` to read a csv file containing `latitude` and `longitude` columns.
+Read values will be appended to the csv for each row:
+```bash
+python3 grib_reader.py --data '2 metre temperature' --csv=${POSITIONS.csv} ${FILE_PATH} 
 ```
 
 ### With docker image
