@@ -1,6 +1,7 @@
 import argparse
 import sys
 
+import datetime
 import pandas as pd
 import rasterio
 from affine import Affine
@@ -13,6 +14,14 @@ def read_args():
     parser.add_argument('longitude', help='longitude to extract value at', type=float)
     args = parser.parse_args()
     return args
+
+
+def format_time(s):
+    end_patt = " sec UTC"
+    if not s.endswith(end_patt):
+        raise Exception('Unknown time format "{}", expecting "timestamp sec UTC"'.format(s))
+    v = int(s.replace(end_patt, ""))
+    return datetime.datetime.utcfromtimestamp(v)
 
 
 if __name__ == '__main__':
@@ -38,6 +47,8 @@ if __name__ == '__main__':
         df['unit'] = [tags['GRIB_UNIT']]
         df['latitude'] = [args.latitude]
         df['longitude'] = [args.longitude]
-        df['valid_time'] = [tags['GRIB_VALID_TIME']]
-        df['ref_time'] = [tags['GRIB_REF_TIME']]
+        valid_time = format_time(tags['GRIB_VALID_TIME'])
+        df['valid_time'] = [valid_time]
+        ref_time = format_time(tags['GRIB_REF_TIME'])
+        df['ref_time'] = [ref_time]
         df.to_csv(sys.stdout, index=False)
