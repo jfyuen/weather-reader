@@ -1,6 +1,5 @@
 import argparse
 import sys
-from collections import namedtuple
 
 import pandas as pd
 import rasterio
