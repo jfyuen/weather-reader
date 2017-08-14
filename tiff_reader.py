@@ -10,6 +10,7 @@ from affine import Affine
 def read_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('tiff', help='geotiff file to read')
+    parser.add_argument('-o', help='save output to file, default to stdout', default=sys.stdout)
     group = parser.add_mutually_exclusive_group()
     group.add_argument('--pos', help='latitude,longitude tuple', default=None)
     group.add_argument('--csv',
@@ -79,4 +80,4 @@ if __name__ == '__main__':
             dfs.append(df)
 
     all_df = pd.concat(dfs)
-    all_df.to_csv(sys.stdout, index=False)
+    all_df.to_csv(args.o, index=False)

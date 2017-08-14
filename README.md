@@ -15,6 +15,7 @@ python3 tiff_reader.py ${FILE_PATH} --pos=latitude,longitude
 
 - `${FILE_PATH}`: path to file to read`
 - `latitude`, `longitude`: coordinates to get value
+- Option `-o` to save output to a file, default to stdout
 
 The output is in csv format, to handle future multiple coordinates to output at once.
 
@@ -31,6 +32,8 @@ python3 grib_reader.py --pos=latitude,longitude ${FILE_PATH}
 
 - `${FILE_PATH}` path to file to read`
 - Option `--data`: extract selected data from file, e.g: '2 metre temperature'
+- `latitude`, `longitude`: coordinates to get value
+- Option `-o` to save output to a file, default to stdout
 
 Example:
 ```bash

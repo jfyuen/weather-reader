@@ -22,6 +22,7 @@ def init_interpolator(lats, lons, values, method='nearest'):
 def read_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('grib', help='grib file to read')
+    parser.add_argument('-o', help='save output to file, default to stdout', default=sys.stdout)
     parser.add_argument('--data', help='data to extract from grib, e.g: "2 metre temperature", or all if not specified',
                         default=None)
     group = parser.add_mutually_exclusive_group()
@@ -78,4 +79,4 @@ if __name__ == '__main__':
                 dfs.append(df)
 
     all_df = pd.concat(dfs)
-    all_df.to_csv(sys.stdout, index=False)
+    all_df.to_csv(args.o, index=False)
