@@ -25,6 +25,7 @@ def read_args():
     parser.add_argument('-o', help='save output to file, default to stdout', default=sys.stdout)
     parser.add_argument('--data', help='data to extract from grib, e.g: "2 metre temperature", or all if not specified. Accept multiple values separated by ","',
                         default=None)
+    parser.add_argument('--level', help='levels to extract. Accept multiple values separated by ","', default=None)
     group = parser.add_mutually_exclusive_group()
     group.add_argument('--pos', help='latitude,longitude tuple', default=None)
     group.add_argument('--csv',
@@ -54,12 +55,12 @@ if __name__ == '__main__':
 
     dfs = []
     with pygrib.open(args.grib) as grbs:
-        if args.data is None:
-            selected = grbs
-        else:
-            names = args.data.split(',')
-            selected = grbs.select(name=names)
-        for grb in selected:
+        grbs_params = {}
+        if args.data is not None:
+            grbs_params['name'] = args.data.split(',')
+        if args.level is not None:
+            grbs_params['level'] = [int(l) for l in args.level.split(',')]
+        for grb in grbs.select(**grbs_params):
             lats, lons = grb.latlons()
             interpolator = init_interpolator(grb.distinctLatitudes, grb.distinctLongitudes, grb.values)
 
@@ -75,6 +76,7 @@ if __name__ == '__main__':
                 df['unit'] = [grb.units]
                 df['valid_time'] = [grb.validDate]
                 df['ref_time'] = [grb.analDate]  # TODO: really analDate?
+                df['level'] = [grb.level]
                 for c in in_df.columns:
                     df[c] = row[c]
                 dfs.append(df)
