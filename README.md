@@ -31,7 +31,7 @@ python3 grib_reader.py --pos=latitude,longitude ${FILE_PATH}
 ```
 
 - `${FILE_PATH}` path to file to read`
-- Option `--data`: extract selected data from file, e.g: '2 metre temperature'
+- Option `--data`: extract selected data from file, e.g: '2 metre temperature'. A list separated by commas can also be given, e.g: '2 metre temperature,Mean sea level pressure'
 - `latitude`, `longitude`: coordinates to get value
 - Option `-o` to save output to a file, default to stdout
 

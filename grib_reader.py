@@ -23,7 +23,7 @@ def read_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('grib', help='grib file to read')
     parser.add_argument('-o', help='save output to file, default to stdout', default=sys.stdout)
-    parser.add_argument('--data', help='data to extract from grib, e.g: "2 metre temperature", or all if not specified',
+    parser.add_argument('--data', help='data to extract from grib, e.g: "2 metre temperature", or all if not specified. Accept multiple values separated by ","',
                         default=None)
     group = parser.add_mutually_exclusive_group()
     group.add_argument('--pos', help='latitude,longitude tuple', default=None)
@@ -57,7 +57,8 @@ if __name__ == '__main__':
         if args.data is None:
             selected = grbs
         else:
-            selected = grbs.select(name=args.data)
+            names = args.data.split(',')
+            selected = grbs.select(name=names)
         for grb in selected:
             lats, lons = grb.latlons()
             interpolator = init_interpolator(grb.distinctLatitudes, grb.distinctLongitudes, grb.values)
